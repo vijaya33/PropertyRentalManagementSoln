@@ -40,13 +40,13 @@ This application is designed using a clean layered architecture with separate pr
 
 **Entity Framework Core migrations create the following application tables and ASP.NET Core Identity tables:**
 
-**dbo.Properties**
-**dbo.Units**
-**dbo.Tenants**
-**dbo.Landlords**
-**dbo.Leases**
-**dbo.Payments**
-**dbo.MaintenanceRequests**
+- **dbo.Properties**
+- **dbo.Units**
+- **dbo.Tenants**
+- **dbo.Landlords**
+- **dbo.Leases**
+- **dbo.Payments**
+- **dbo.MaintenanceRequests**
 
 ---
 
