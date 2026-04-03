@@ -1,10 +1,11 @@
 ﻿@page "/properties/create"
+@using PropertyRentalManagement.Core.Entities
 @inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
 @inject NavigationManager Nav
 
 <h3>Create Property</h3>
 
-<EditForm Model="model" OnValidSubmit="SaveAsync">
+<EditForm Model="model" OnValidSubmit="SaveAsync" FormName="CreatePropertyForm">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -43,7 +44,7 @@
 </EditForm>
 
 @code {
-    private PropertyRentalManagement.Core.Entities.Property model = new();
+    private Property model = new();
 
     private async Task SaveAsync()
     {
@@ -52,3 +53,4 @@
         Nav.NavigateTo("/properties");
     }
 }
+
