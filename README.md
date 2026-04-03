@@ -60,7 +60,7 @@ This application is designed using a clean layered architecture with separate pr
 - **dbo.AspNetUserTokens**
 - **dbo.AspNetRoleClaims**
 
-- # Solution Architect and Developer: Vijaya Laxmi Kumbaji, Principal Software Engineer.
+- ### Solution Architect and Developer: Vijaya Laxmi Kumbaji, Principal Software Engineer.
 
 # Solution Structure
 
