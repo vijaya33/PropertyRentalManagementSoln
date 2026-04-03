@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="PropertyRentalManagement.Core/PropertyRentalManagement.Core.csproj" />
+  <Project Path="PropertyRentalManagement.Infrastructure/PropertyRentalManagement.Infrastructure.csproj" Id="e7b11bc5-6034-4a5b-b674-b1b89982fb47" />
+  <Project Path="PropertyRentalManagement.Web/PropertyRentalManagement.Web.csproj" />
+</Solution>

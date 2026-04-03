@@ -1,0 +1,54 @@
+﻿@page "/properties/create"
+@inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
+@inject NavigationManager Nav
+
+<h3>Create Property</h3>
+
+<EditForm Model="model" OnValidSubmit="SaveAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">Property Name</label>
+        <InputText class="form-control" @bind-Value="model.PropertyName" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Address</label>
+        <InputText class="form-control" @bind-Value="model.AddressLine1" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">City</label>
+        <InputText class="form-control" @bind-Value="model.City" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">State</label>
+        <InputText class="form-control" @bind-Value="model.State" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Zip Code</label>
+        <InputText class="form-control" @bind-Value="model.ZipCode" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Total Units</label>
+        <InputNumber class="form-control" @bind-Value="model.TotalUnits" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="/properties" class="btn btn-secondary ms-2">Cancel</a>
+</EditForm>
+
+@code {
+    private PropertyRentalManagement.Core.Entities.Property model = new();
+
+    private async Task SaveAsync()
+    {
+        Db.Properties.Add(model);
+        await Db.SaveChangesAsync();
+        Nav.NavigateTo("/properties");
+    }
+}

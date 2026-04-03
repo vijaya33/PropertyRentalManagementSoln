@@ -1,0 +1,51 @@
+﻿
+@page "/properties"
+@inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
+
+@using Microsoft.EntityFrameworkCore;
+
+<h3>Properties</h3>
+
+<a class="btn btn-primary mb-3" href="/properties/create">Add Property</a>
+
+@if (properties == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!properties.Any())
+{
+    <p>No properties found.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Total Units</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in properties)
+            {
+                <tr>
+                    <td>@item.PropertyName</td>
+                    <td>@item.City</td>
+                    <td>@item.State</td>
+                    <td>@item.TotalUnits</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<PropertyRentalManagement.Core.Entities.Property> properties = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        properties = await Db.Properties.ToListAsync();
+    }
+}
