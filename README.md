@@ -107,6 +107,6 @@ PropertyRentalManagementSoln/
 └── PropertyRentalManagementSoln.sln
 
 
-** ## Author / Architect and Developer: Vijaya Laxmi Kumbaji, Principal Software Engineer and my peer developer ChatGpt. **
+**## Author / Architect and Developer: Vijaya Laxmi Kumbaji, Principal Software Engineer.**
  
 
