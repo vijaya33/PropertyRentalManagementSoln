@@ -105,3 +105,8 @@ PropertyRentalManagementSoln/
 │   └── PropertyRentalManagement.Infrastructure.csproj
 │
 └── PropertyRentalManagementSoln.sln
+
+
+## Author / Architect and Developer: Vijaya Laxmi Kumbaji, Principal Software Engineer and my peer developer ChatGpt.
+ 
+
