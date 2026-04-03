@@ -36,7 +36,31 @@ This application is designed using a clean layered architecture with separate pr
 
 ---
 
-## Solution Structure
+## Database Tables
+
+**Entity Framework Core migrations create the following application tables and ASP.NET Core Identity tables:**
+
+**dbo.Properties**
+**dbo.Units**
+**dbo.Tenants**
+**dbo.Landlords**
+**dbo.Leases**
+**dbo.Payments**
+**dbo.MaintenanceRequests**
+
+---
+
+**Identity tables created by ASP.NET Core Identity include:**
+
+**dbo.AspNetUsers**
+**dbo.AspNetRoles**
+**dbo.AspNetUserClaims**
+**dbo.AspNetUserLogins**
+**dbo.AspNetUserRoles**
+**dbo.AspNetUserTokens**
+**dbo.AspNetRoleClaims**
+
+# Solution Structure
 
 ```text
 PropertyRentalManagementSoln/
