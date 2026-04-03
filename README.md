@@ -107,6 +107,6 @@ PropertyRentalManagementSoln/
 └── PropertyRentalManagementSoln.sln
 
 
-**## Author / Architect and Developer: Vijaya Laxmi Kumbaji, Principal Software Engineer.**
+## **Author / Architect and Developer: Vijaya Laxmi Kumbaji, Principal Software Engineer.**
  
 
