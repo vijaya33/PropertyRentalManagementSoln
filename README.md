@@ -52,13 +52,13 @@ This application is designed using a clean layered architecture with separate pr
 
 **Identity tables created by ASP.NET Core Identity include:**
 
-**dbo.AspNetUsers**
-**dbo.AspNetRoles**
-**dbo.AspNetUserClaims**
-**dbo.AspNetUserLogins**
-**dbo.AspNetUserRoles**
-**dbo.AspNetUserTokens**
-**dbo.AspNetRoleClaims**
+- **dbo.AspNetUsers**
+- **dbo.AspNetRoles**
+- **dbo.AspNetUserClaims**
+- **dbo.AspNetUserLogins**
+- **dbo.AspNetUserRoles**
+- **dbo.AspNetUserTokens**
+- **dbo.AspNetRoleClaims**
 
 # Solution Structure
 
