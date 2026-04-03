@@ -1,14 +1,107 @@
-# Blazor and SQL Server web application for property management companies. 
+# Property Rental Management Application
 
-## Provides functionality for registering properties, listing properties, editing / deleting properties. 
+A modern **Blazor Web App** built with **.NET 8**, **Entity Framework Core**, and **SQL Server LocalDB** for managing rental properties, tenants, landlords, leases, payments, and maintenance requests.
 
-## Rental payments 
+This application is designed using a clean layered architecture with separate projects for:
 
-## Manage Tenants 
+- **Web** → UI and application startup
+- **Core** → business entities and domain models
+- **Infrastructure** → Entity Framework Core, database access, and migrations
 
-## Manage Landlords 
+---
 
-## Maintenance work etc. 
+## Features
 
+- Property management
+- Unit management
+- Tenant management
+- Landlord management
+- Lease management
+- Payment tracking
+- Maintenance request tracking
+- ASP.NET Core Identity tables for authentication/authorization
+- SQL Server LocalDB persistence using Entity Framework Core migrations
 
-# Project Files and Folder structure below: 
+---
+
+## Technology Stack
+
+- **.NET 8**
+- **Blazor Web App**
+- **C#**
+- **Entity Framework Core**
+- **SQL Server LocalDB**
+- **ASP.NET Core Identity**
+- **Visual Studio 2026**
+
+---
+
+## Solution Structure
+
+```text
+PropertyRentalManagementSoln/
+│
+├── PropertyRentalManagement.Web/
+│   │
+│   ├── Components/
+│   │   ├── Layout/
+│   │   │   ├── MainLayout.razor
+│   │   │   ├── MainLayout.razor.css
+│   │   │   ├── NavMenu.razor
+│   │   │   └── NavMenu.razor.css
+│   │   │
+│   │   ├── Pages/
+│   │   │   ├── Home.razor
+│   │   │   ├── Error.razor
+│   │   │   ├── Counter.razor
+│   │   │   ├── Weather.razor
+│   │   │   ├── PropertyList.razor
+│   │   │   └── PropertyCreate.razor
+│   │   │
+│   │   ├── App.razor
+│   │   ├── Routes.razor
+│   │   └── _Imports.razor
+│   │
+│   ├── Data/
+│   ├── Models/
+│   ├── Services/
+│   ├── wwwroot/
+│   │   ├── app.css
+│   │   ├── bootstrap/
+│   │   └── favicon.png
+│   │
+│   ├── Properties/
+│   │   └── launchSettings.json
+│   │
+│   ├── appsettings.json
+│   ├── appsettings.Development.json
+│   ├── Program.cs
+│   └── PropertyRentalManagement.Web.csproj
+│
+├── PropertyRentalManagement.Core/
+│   │
+│   ├── Entities/
+│   │   ├── Property.cs
+│   │   ├── Unit.cs
+│   │   ├── Tenant.cs
+│   │   ├── Landlord.cs
+│   │   ├── Lease.cs
+│   │   ├── Payment.cs
+│   │   └── MaintenanceRequest.cs
+│   │
+│   └── PropertyRentalManagement.Core.csproj
+│
+├── PropertyRentalManagement.Infrastructure/
+│   │
+│   ├── Data/
+│   │   └── RentalDbContext.cs
+│   │
+│   ├── Migrations/
+│   │   ├── <timestamp>_InitialCreate.cs
+│   │   ├── <timestamp>_InitialCreate.Designer.cs
+│   │   └── RentalDbContextModelSnapshot.cs
+│   │
+│   ├── Class1.cs
+│   └── PropertyRentalManagement.Infrastructure.csproj
+│
+└── PropertyRentalManagementSoln.sln
