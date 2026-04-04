@@ -1,0 +1,42 @@
+﻿@page "/landlords/create"
+@using PropertyRentalManagement.Core.Entities
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components
+@inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
+@inject NavigationManager Nav
+
+<h3>Add New Landlord</h3>
+
+<EditForm Model="model" OnValidSubmit="SaveAsync" FormName="CreateLandlordForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <InputText class="form-control" @bind-Value="model.FullName" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <InputText class="form-control" @bind-Value="model.Email" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Phone Number</label>
+        <InputText class="form-control" @bind-Value="model.PhoneNumber" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="/landlords" class="btn btn-secondary ms-2">Cancel</a>
+</EditForm>
+
+@code {
+    private Landlord model = new();
+
+    private async Task SaveAsync()
+    {
+        Db.Landlords.Add(model);
+        await Db.SaveChangesAsync();
+        Nav.NavigateTo("/landlords");
+    }
+}
