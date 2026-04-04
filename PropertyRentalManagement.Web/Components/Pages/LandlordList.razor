@@ -1,0 +1,50 @@
+﻿@page "/landlords"
+@using PropertyRentalManagement.Core.Entities
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components
+@inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
+
+<h3>Landlords</h3>
+
+<a class="btn btn-primary mb-3" href="/landlords/create">Add New Landlord</a>
+
+@if (landlords == null)
+{
+    <p>Loading...</p>
+}
+else if (!landlords.Any())
+{
+    <p>No landlords found.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var landlord in landlords)
+            {
+                <tr>
+                    <td>@landlord.FullName</td>
+                    <td>@landlord.Email</td>
+                    <td>@landlord.PhoneNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Landlord> landlords = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        landlords = await Db.Landlords.ToListAsync();
+    }
+}
