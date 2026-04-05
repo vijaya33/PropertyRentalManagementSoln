@@ -13,4 +13,6 @@ public class Landlord
     public string FullName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
+
+    public ICollection<Property> Properties { get; set; } = new List<Property>();
 }

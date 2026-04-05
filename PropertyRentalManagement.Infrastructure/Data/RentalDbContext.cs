@@ -115,7 +115,7 @@ namespace PropertyRentalManagement.Infrastructure.Data
                     .HasForeignKey(m => m.TenantId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
-
+            /*
             builder.Entity<Landlord>(entity =>
             {
                 entity.HasKey(l => l.Id);
@@ -131,6 +131,60 @@ namespace PropertyRentalManagement.Infrastructure.Data
                 entity.Property(l => l.PhoneNumber)
                     .HasMaxLength(30)
                     .IsRequired();
+            }); */
+            builder.Entity<Landlord>(entity =>
+            {
+                entity.HasKey(l => l.Id);
+
+                entity.Property(l => l.FullName)
+                    .HasMaxLength(150)
+                    .IsRequired();
+
+                entity.Property(l => l.Email)
+                    .HasMaxLength(150)
+                    .IsRequired();
+
+                entity.Property(l => l.PhoneNumber)
+                    .HasMaxLength(30)
+                    .IsRequired();
+
+                entity.HasMany(l => l.Properties)
+                    .WithOne(p => p.Landlord)
+                    .HasForeignKey(p => p.LandlordId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<Property>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+
+                entity.Property(p => p.PropertyName)
+                    .HasMaxLength(150)
+                    .IsRequired();
+
+                entity.Property(p => p.AddressLine1)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.Property(p => p.AddressLine2)
+                    .HasMaxLength(200);
+
+                entity.Property(p => p.City)
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                entity.Property(p => p.State)
+                    .HasMaxLength(50)
+                    .IsRequired();
+
+                entity.Property(p => p.ZipCode)
+                    .HasMaxLength(20)
+                    .IsRequired();
+
+                entity.HasMany(p => p.Units)
+                    .WithOne(u => u.Property)
+                    .HasForeignKey(u => u.PropertyId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             builder.Entity<Lease>(entity =>

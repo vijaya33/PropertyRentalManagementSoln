@@ -388,6 +388,9 @@ namespace PropertyRentalManagement.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int?>("LandlordId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PropertyName")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -407,6 +410,8 @@ namespace PropertyRentalManagement.Infrastructure.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LandlordId");
 
                     b.ToTable("Properties");
                 });
@@ -579,6 +584,16 @@ namespace PropertyRentalManagement.Infrastructure.Migrations
                     b.Navigation("Lease");
                 });
 
+            modelBuilder.Entity("PropertyRentalManagement.Core.Entities.Property", b =>
+                {
+                    b.HasOne("PropertyRentalManagement.Core.Entities.Landlord", "Landlord")
+                        .WithMany("Properties")
+                        .HasForeignKey("LandlordId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Landlord");
+                });
+
             modelBuilder.Entity("PropertyRentalManagement.Core.Entities.Unit", b =>
                 {
                     b.HasOne("PropertyRentalManagement.Core.Entities.Property", "Property")
@@ -588,6 +603,11 @@ namespace PropertyRentalManagement.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Property");
+                });
+
+            modelBuilder.Entity("PropertyRentalManagement.Core.Entities.Landlord", b =>
+                {
+                    b.Navigation("Properties");
                 });
 
             modelBuilder.Entity("PropertyRentalManagement.Core.Entities.Lease", b =>

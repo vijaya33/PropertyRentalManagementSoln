@@ -4,15 +4,14 @@
 
 @using Microsoft.EntityFrameworkCore;
 
+@using PropertyRentalManagement.Core.Entities
+
+
 <h3>Properties</h3>
 
 <a class="btn btn-primary mb-3" href="/properties/create">Add Property</a>
 
-@if (properties == null)
-{
-    <p><em>Loading...</em></p>
-}
-else if (!properties.Any())
+@if (!properties.Any())
 {
     <p>No properties found.</p>
 }
@@ -25,6 +24,7 @@ else
                 <th>City</th>
                 <th>State</th>
                 <th>Total Units</th>
+                <th>Landlord</th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +35,7 @@ else
                     <td>@item.City</td>
                     <td>@item.State</td>
                     <td>@item.TotalUnits</td>
+                    <td>@item.Landlord?.FullName</td>
                 </tr>
             }
         </tbody>
@@ -42,10 +43,13 @@ else
 }
 
 @code {
-    private List<PropertyRentalManagement.Core.Entities.Property> properties = new();
+    private List<Property> properties = new();
 
     protected override async Task OnInitializedAsync()
     {
-        properties = await Db.Properties.ToListAsync();
+        properties = await Db.Properties
+            .Include(p => p.Landlord)
+            .OrderBy(p => p.PropertyName)
+            .ToListAsync();
     }
 }

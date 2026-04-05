@@ -11,5 +11,8 @@ public class Property
     public string ZipCode { get; set; } = string.Empty;
     public int TotalUnits { get; set; }
 
+    public int? LandlordId { get; set; }
+    public Landlord? Landlord { get; set; }
+
     public ICollection<Unit> Units { get; set; } = new List<Unit>();
 }

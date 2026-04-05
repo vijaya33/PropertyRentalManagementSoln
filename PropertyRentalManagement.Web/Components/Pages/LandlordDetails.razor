@@ -1,0 +1,65 @@
+﻿@page "/landlords/{id:int}"
+@using Microsoft.EntityFrameworkCore
+@using PropertyRentalManagement.Core.Entities
+@inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
+
+@inject NavigationManager Nav
+
+<h3>Landlord Details</h3>
+
+@if (landlord == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="mb-4">
+        <p><strong>Full Name:</strong> @landlord.FullName</p>
+        <p><strong>Email:</strong> @landlord.Email</p>
+        <p><strong>Phone Number:</strong> @landlord.PhoneNumber</p>
+    </div>
+
+    <h4>Assigned Properties</h4>
+
+    @if (!landlord.Properties.Any())
+    {
+        <p>No properties assigned.</p>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Property Name</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Total Units</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var property in landlord.Properties)
+                {
+                    <tr>
+                        <td>@property.PropertyName</td>
+                        <td>@property.City</td>
+                        <td>@property.State</td>
+                        <td>@property.TotalUnits</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+
+    private Landlord? landlord;
+
+    protected override async Task OnInitializedAsync()
+    {
+        landlord = await Db.Landlords
+            .Include(l => l.Properties)
+            .FirstOrDefaultAsync(l => l.Id == Id);
+    }
+}
