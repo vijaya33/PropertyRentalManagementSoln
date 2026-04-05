@@ -1,0 +1,51 @@
+﻿@page "/tenants"
+@using Microsoft.EntityFrameworkCore
+@using PropertyRentalManagement.Core.Entities
+@inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
+@inject NavigationManager Nav
+
+
+<h3>List of Tenants</h3>
+
+<a class="btn btn-primary mb-3" href="/tenants/create">Add New Tenant</a>
+
+@if (!tenants.Any())
+{
+    <p>No tenants found.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tenant in tenants)
+            {
+                <tr>
+                    <td>@tenant.FirstName</td>
+                    <td>@tenant.LastName</td>
+                    <td>@tenant.Email</td>
+                    <td>@tenant.PhoneNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Tenant> tenants = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        tenants = await Db.Tenants
+            .OrderBy(t => t.LastName)
+            .ThenBy(t => t.FirstName)
+            .ToListAsync();
+    }
+}

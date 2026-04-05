@@ -1,0 +1,57 @@
+﻿@page "/tenants/create"
+@using Microsoft.AspNetCore.Components
+@using PropertyRentalManagement.Core.Entities
+@inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
+@inject NavigationManager Nav
+
+
+<h3>Add New Tenant</h3>
+
+<EditForm Model="Input" OnValidSubmit="SaveAsync" FormName="CreateTenantForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">First Name</label>
+        <InputText class="form-control" @bind-Value="Input.FirstName" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Last Name</label>
+        <InputText class="form-control" @bind-Value="Input.LastName" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <InputText class="form-control" @bind-Value="Input.Email" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Phone Number</label>
+        <InputText class="form-control" @bind-Value="Input.PhoneNumber" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="/tenants" class="btn btn-secondary ms-2">Cancel</a>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    private Tenant Input { get; set; } = new();
+
+    private async Task SaveAsync()
+    {
+        var entity = new Tenant
+        {
+            FirstName = Input.FirstName,
+            LastName = Input.LastName,
+            Email = Input.Email,
+            PhoneNumber = Input.PhoneNumber
+        };
+
+        Db.Tenants.Add(entity);
+        await Db.SaveChangesAsync();
+
+        Nav.NavigateTo("/tenants");
+    }
+}
