@@ -1,21 +1,15 @@
 ﻿@page "/landlords"
-@using PropertyRentalManagement.Core.Entities
 @using Microsoft.EntityFrameworkCore
-@using Microsoft.AspNetCore.Components.Forms
-@using Microsoft.AspNetCore.Components
+@using PropertyRentalManagement.Core.Entities
 @inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
-
 @inject NavigationManager Nav
+
 
 <h3>Landlords</h3>
 
 <a class="btn btn-primary mb-3" href="/landlords/create">Add New Landlord</a>
 
-@if (landlords == null)
-{
-    <p>Loading...</p>
-}
-else if (!landlords.Any())
+@if (!landlords.Any())
 {
     <p>No landlords found.</p>
 }
@@ -27,6 +21,7 @@ else
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone Number</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +31,12 @@ else
                     <td>@landlord.FullName</td>
                     <td>@landlord.Email</td>
                     <td>@landlord.PhoneNumber</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary"
+                               href="/landlords/details/@landlord.Id">
+                            Details
+                        </a>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -47,6 +48,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        landlords = await Db.Landlords.ToListAsync();
+        landlords = await Db.Landlords
+            .OrderBy(l => l.FullName)
+            .ToListAsync();
     }
 }
