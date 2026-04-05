@@ -1,29 +1,30 @@
-﻿@page "/landlords/create"
+﻿
+
+@page "/landlords/create"
 @using PropertyRentalManagement.Core.Entities
-@using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components
 @inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
 @inject NavigationManager Nav
 
 <h3>Add New Landlord</h3>
 
-<EditForm Model="model" OnValidSubmit="SaveAsync" FormName="CreateLandlordForm">
+<EditForm Model="Input" OnValidSubmit="SaveAsync" FormName="CreateLandlordForm">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <div class="mb-3">
         <label class="form-label">Full Name</label>
-        <InputText class="form-control" @bind-Value="model.FullName" />
+        <InputText class="form-control" @bind-Value="Input.FullName" />
     </div>
 
     <div class="mb-3">
         <label class="form-label">Email</label>
-        <InputText class="form-control" @bind-Value="model.Email" />
+        <InputText class="form-control" @bind-Value="Input.Email" />
     </div>
 
     <div class="mb-3">
         <label class="form-label">Phone Number</label>
-        <InputText class="form-control" @bind-Value="model.PhoneNumber" />
+        <InputText class="form-control" @bind-Value="Input.PhoneNumber" />
     </div>
 
     <button type="submit" class="btn btn-success">Save</button>
@@ -31,12 +32,21 @@
 </EditForm>
 
 @code {
-    private Landlord model = new();
+    [SupplyParameterFromForm]
+    private Landlord Input { get; set; } = new();
 
     private async Task SaveAsync()
     {
-        Db.Landlords.Add(model);
+        var entity = new Landlord
+        {
+            FullName = Input.FullName,
+            Email = Input.Email,
+            PhoneNumber = Input.PhoneNumber
+        };
+
+        Db.Landlords.Add(entity);
         await Db.SaveChangesAsync();
+
         Nav.NavigateTo("/landlords");
     }
 }
