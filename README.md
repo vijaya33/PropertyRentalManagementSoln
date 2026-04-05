@@ -79,10 +79,16 @@ PropertyRentalManagementSoln/
 │   │   ├── Pages/
 │   │   │   ├── Home.razor
 │   │   │   ├── Error.razor
-│   │   │   ├── Counter.razor
-│   │   │   ├── Weather.razor
+│   │   │   ├── LandlordList.razor
+│   │   │   ├── LandlordCreate.razor
 │   │   │   ├── PropertyList.razor
 │   │   │   └── PropertyCreate.razor
+|   |   |   ├── TenantList.razor
+│   │   │   ├── TenantCreate.razor
+│   │   │   ├── LeaseCreate.razor
+│   │   │   └── LandlordDetails.razor
+│   │   │   ├── MaintenanceRequests.razor
+│   │   │   └── {{Placeholder_new_razor}}.razor
 │   │   │
 │   │   ├── App.razor
 │   │   ├── Routes.razor
