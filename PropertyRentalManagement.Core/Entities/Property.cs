@@ -32,7 +32,8 @@ namespace PropertyRentalManagement.Core.Entities
         [Range(1, 10000, ErrorMessage = "Total Units must be at least 1.")]
         public int TotalUnits { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Please select a landlord.")]
+        //[Range(1, int.MaxValue, ErrorMessage = "Please select a landlord.")]
+        [Required(ErrorMessage = "Please select a landlord.")]
         public int? LandlordId { get; set; }
 
         public Landlord? Landlord { get; set; }

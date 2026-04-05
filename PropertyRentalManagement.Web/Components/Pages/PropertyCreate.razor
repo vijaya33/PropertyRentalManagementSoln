@@ -55,7 +55,7 @@
 
     <div class="mb-3">
         <label class="form-label">Landlord</label>
-        <InputSelect class="form-select" @bind-Value="Input.LandlordId">
+        <InputSelect TValue="int?" class="form-select" @bind-Value="Input.LandlordId">
             <option value="">-- Select Landlord --</option>
             @foreach (var landlord in landlords)
             {
