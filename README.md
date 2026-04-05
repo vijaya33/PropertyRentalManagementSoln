@@ -59,6 +59,14 @@ This application is designed using a clean layered architecture with separate pr
 - **dbo.AspNetUserRoles**
 - **dbo.AspNetUserTokens**
 - **dbo.AspNetRoleClaims**
+- ** The following roles were inserted into the dbo.AspNetRoles table in SQL Server DB (LocalDB) with SSMS 2021. .
+- Assistant Property Manager
+- Account Manager
+- Entry Level Property Associate
+- Maintenance Supervisor
+- Maintenance Technician
+- Property Manager
+- Leasing Agent 
 
 - ### Solution Architect and Developer: Vijaya Laxmi Kumbaji, Principal Software Engineer.
 
