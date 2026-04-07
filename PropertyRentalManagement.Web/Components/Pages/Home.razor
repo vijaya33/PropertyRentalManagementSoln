@@ -3,6 +3,7 @@
 @inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
 @inject NavigationManager Nav
 
+
 <PageTitle>Dashboard</PageTitle>
 
 <h2 class="mb-3">Welcome to Property Rental Management</h2>
@@ -27,71 +28,84 @@ else
 {
     <div class="row g-4">
         <div class="col-md-4">
-            <div class="card text-white bg-primary shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Properties</h5>
-                    <h2>@propertyCount</h2>
-                    <p class="card-text">Total properties currently managed in the system.</p>
+            <a href="/properties" class="text-decoration-none">
+                <div class="card text-white bg-primary shadow-sm h-100 dashboard-tile">
+                    <div class="card-body">
+                        <h5 class="card-title">Properties</h5>
+                        <h2>@propertyCount</h2>
+                        <p class="card-text">Total properties currently managed in the system.</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <div class="col-md-4">
-            <div class="card text-white bg-success shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Landlords</h5>
-                    <h2>@landlordCount</h2>
-                    <p class="card-text">Registered landlords associated with properties.</p>
+            <a href="/landlords" class="text-decoration-none">
+                <div class="card text-white bg-success shadow-sm h-100 dashboard-tile">
+                    <div class="card-body">
+                        <h5 class="card-title">Landlords</h5>
+                        <h2>@landlordCount</h2>
+                        <p class="card-text">Registered landlords associated with properties.</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <div class="col-md-4">
-            <div class="card text-white bg-info shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Tenants</h5>
-                    <h2>@tenantCount</h2>
-                    <p class="card-text">Active tenant records available in the application.</p>
+            <a href="/tenants" class="text-decoration-none">
+                <div class="card text-white bg-info shadow-sm h-100 dashboard-tile">
+                    <div class="card-body">
+                        <h5 class="card-title">Tenants</h5>
+                        <h2>@tenantCount</h2>
+                        <p class="card-text">Active tenant records available in the application.</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <div class="col-md-4">
-            <div class="card text-white bg-warning shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Leases</h5>
-                    <h2>@leaseCount</h2>
-                    <p class="card-text">Lease agreements tracked across all rental units.</p>
+            <a href="/leases" class="text-decoration-none">
+                <div class="card text-white bg-warning shadow-sm h-100 dashboard-tile">
+                    <div class="card-body">
+                        <h5 class="card-title">Leases</h5>
+                        <h2>@leaseCount</h2>
+                        <p class="card-text">Lease agreements tracked across all rental units.</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <div class="col-md-4">
-            <div class="card text-white bg-danger shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Maintenance Requests</h5>
-                    <h2>@maintenanceRequestCount</h2>
-                    <p class="card-text">Maintenance tickets submitted for properties and units.</p>
+            <a href="/maintenance-requests" class="text-decoration-none">
+                <div class="card text-white bg-danger shadow-sm h-100 dashboard-tile">
+                    <div class="card-body">
+                        <h5 class="card-title">Maintenance Requests</h5>
+                        <h2>@maintenanceRequestCount</h2>
+                        <p class="card-text">Maintenance tickets submitted for properties and units.</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <div class="col-md-4">
-            <div class="card text-white bg-secondary shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Payments</h5>
-                    <h2>@paymentCount</h2>
-                    <p class="card-text">Rent and related payments recorded in the system.</p>
+            <a href="/payments" class="text-decoration-none">
+                <div class="card text-white bg-secondary shadow-sm h-100 dashboard-tile">
+                    <div class="card-body">
+                        <h5 class="card-title">Payments</h5>
+                        <h2>@paymentCount</h2>
+                        <p class="card-text">Rent and related payments recorded in the system.</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
     <div class="mt-5">
         <h4>Quick Overview</h4>
         <p>
-            The dashboard provides a snapshot of the current portfolio and operational workload, future releases and version(s) of this dashboard will include upgraded features like 
-                    </p>
+            The dashboard provides a snapshot of the current portfolio and operational workload.
+            As you continue building the application, this area can be expanded to include:
+        </p>
         <ul>
             <li>recent lease activity</li>
             <li>pending maintenance requests</li>
