@@ -39,5 +39,8 @@ namespace PropertyRentalManagement.Core.Entities
         public Landlord? Landlord { get; set; }
 
         public ICollection<Unit> Units { get; set; } = new List<Unit>();
+
+      
+        public ICollection<Lease> Leases { get; set; } = new List<Lease>();
     }
 }

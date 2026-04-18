@@ -79,10 +79,7 @@ namespace PropertyRentalManagement.Infrastructure.Data
                 entity.Property(u => u.IsOccupied)
                     .IsRequired();
 
-                entity.HasMany(u => u.Leases)
-                    .WithOne(l => l.Unit)
-                    .HasForeignKey(l => l.UnitId)
-                    .OnDelete(DeleteBehavior.Restrict);
+             
             });
 
             builder.Entity<Tenant>(entity =>
@@ -115,23 +112,7 @@ namespace PropertyRentalManagement.Infrastructure.Data
                     .HasForeignKey(m => m.TenantId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
-            /*
-            builder.Entity<Landlord>(entity =>
-            {
-                entity.HasKey(l => l.Id);
-
-                entity.Property(l => l.FullName)
-                    .HasMaxLength(150)
-                    .IsRequired();
-
-                entity.Property(l => l.Email)
-                    .HasMaxLength(150)
-                    .IsRequired();
-
-                entity.Property(l => l.PhoneNumber)
-                    .HasMaxLength(30)
-                    .IsRequired();
-            }); */
+         
             builder.Entity<Landlord>(entity =>
             {
                 entity.HasKey(l => l.Id);
@@ -186,10 +167,19 @@ namespace PropertyRentalManagement.Infrastructure.Data
                     .HasForeignKey(u => u.PropertyId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+                     
 
             builder.Entity<Lease>(entity =>
             {
                 entity.HasKey(l => l.Id);
+
+                entity.Property(l => l.MonthlyRent)
+                    .HasColumnType("decimal(18,2)")
+                    .IsRequired();
+
+                entity.Property(l => l.SecurityDeposit)
+                    .HasColumnType("decimal(18,2)")
+                    .IsRequired();
 
                 entity.Property(l => l.LeaseStartDate)
                     .IsRequired();
@@ -197,15 +187,15 @@ namespace PropertyRentalManagement.Infrastructure.Data
                 entity.Property(l => l.LeaseEndDate)
                     .IsRequired();
 
-                entity.Property(l => l.MonthlyRent)
-                    .HasColumnType("decimal(18,2)")
-                    .IsRequired();
+                entity.HasOne(l => l.Tenant)
+                    .WithMany(t => t.Leases)
+                    .HasForeignKey(l => l.TenantId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-                entity.Property(l => l.SecurityDeposit)
-                    .HasColumnType("decimal(18,2)");
-
-                entity.Property(l => l.IsActive)
-                    .IsRequired();
+                entity.HasOne(l => l.Property)
+                    .WithMany(p => p.Leases)
+                    .HasForeignKey(l => l.PropertyId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasMany(l => l.Payments)
                     .WithOne(p => p.Lease)
@@ -213,6 +203,7 @@ namespace PropertyRentalManagement.Infrastructure.Data
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
+        
             builder.Entity<Payment>(entity =>
             {
                 entity.HasKey(p => p.Id);

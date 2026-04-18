@@ -1,9 +1,10 @@
-﻿using System;
+﻿using PropertyRentalManagement.Core.Entities;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
 
 namespace PropertyRentalManagement.Core.Entities
@@ -33,6 +34,7 @@ namespace PropertyRentalManagement.Core.Entities
 
         public ICollection<Lease> Leases { get; set; } = new List<Lease>();
         public ICollection<MaintenanceRequest> MaintenanceRequests { get; set; } = new List<MaintenanceRequest>();
+      
 
     }
 
