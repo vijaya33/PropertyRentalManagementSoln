@@ -19,6 +19,7 @@ namespace PropertyRentalManagement.Infrastructure.Data
         public DbSet<Payment> Payments => Set<Payment>();
         public DbSet<MaintenanceRequest> MaintenanceRequests => Set<MaintenanceRequest>();
 
+        public DbSet<PropertyPhoto> PropertyPhotos => Set<PropertyPhoto>();
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -251,6 +252,30 @@ namespace PropertyRentalManagement.Infrastructure.Data
                     .WithMany()
                     .HasForeignKey(m => m.UnitId)
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+            builder.Entity<PropertyPhoto>(entity =>
+            {
+                entity.HasKey(pp => pp.Id);
+
+                entity.Property(pp => pp.FileName)
+                    .HasMaxLength(255)
+                    .IsRequired();
+
+                entity.Property(pp => pp.ContentType)
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                entity.Property(pp => pp.PhotoData)
+                    .HasColumnType("varbinary(max)")
+                    .IsRequired();
+
+                entity.Property(pp => pp.UploadedOn)
+                    .IsRequired();
+
+                entity.HasOne(pp => pp.Property)
+                    .WithMany(p => p.Photos)
+                    .HasForeignKey(pp => pp.PropertyId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

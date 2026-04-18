@@ -29,18 +29,22 @@ namespace PropertyRentalManagement.Core.Entities
         [StringLength(20)]
         public string ZipCode { get; set; } = string.Empty;
 
+        [StringLength(2000)]
+        public string? Description { get; set; }
+
+        [StringLength(1000)]
+        public string? Amenities { get; set; }
+
         [Range(1, 10000, ErrorMessage = "Total Units must be at least 1.")]
         public int TotalUnits { get; set; }
 
-        //[Range(1, int.MaxValue, ErrorMessage = "Please select a landlord.")]
         [Required(ErrorMessage = "Please select a landlord.")]
         public int? LandlordId { get; set; }
 
         public Landlord? Landlord { get; set; }
 
         public ICollection<Unit> Units { get; set; } = new List<Unit>();
-
-      
         public ICollection<Lease> Leases { get; set; } = new List<Lease>();
+        public ICollection<PropertyPhoto> Photos { get; set; } = new List<PropertyPhoto>();
     }
 }
