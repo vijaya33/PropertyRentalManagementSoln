@@ -1,0 +1,54 @@
+﻿@page "/leases"
+@using Microsoft.EntityFrameworkCore
+@using PropertyRentalManagement.Core.Entities
+@inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
+
+<h3>List Of Leases</h3>
+
+<a class="btn btn-primary mb-3" href="/leases/create">Add New Lease</a>
+
+@if (!leases.Any())
+{
+    <p>No leases found.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tenant</th>
+                <th>Property</th>
+                <th>Monthly Rent</th>
+                <th>Security Deposit</th>
+                <th>Lease Start</th>
+                <th>Lease End</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lease in leases)
+            {
+                <tr>
+                    <td>@lease.Tenant?.FirstName @lease.Tenant?.LastName</td>
+                    <td>@lease.Property?.PropertyName</td>
+                    <td>@lease.MonthlyRent.ToString("C")</td>
+                    <td>@lease.SecurityDeposit.ToString("C")</td>
+                    <td>@lease.LeaseStartDate.ToShortDateString()</td>
+                    <td>@lease.LeaseEndDate.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Lease> leases = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        leases = await Db.Leases
+            .Include(l => l.Tenant)
+            .Include(l => l.Property)
+            .OrderByDescending(l => l.LeaseStartDate)
+            .ToListAsync();
+    }
+}
