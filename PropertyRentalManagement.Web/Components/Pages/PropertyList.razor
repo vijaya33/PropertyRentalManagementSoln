@@ -25,6 +25,7 @@ else
                 <th>State</th>
                 <th>Total Units</th>
                 <th>Landlord</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +37,11 @@ else
                     <td>@item.State</td>
                     <td>@item.TotalUnits</td>
                     <td>@item.Landlord?.FullName</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary" href="/properties/details/@item.Id">
+                            Details
+                        </a>
+                    </td>
                 </tr>
             }
         </tbody>

@@ -1,0 +1,262 @@
+﻿@page "/properties/details/{id:int}"
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.EntityFrameworkCore
+@using PropertyRentalManagement.Core.Entities
+@inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
+@inject NavigationManager Nav
+
+<h3>Property Details</h3>
+
+@if (property == null)
+{
+    <p><em>Loading property details...</em></p>
+}
+else
+{
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title">@property.PropertyName</h4>
+
+            <p class="mb-1">
+                <strong>Full Address:</strong>
+                @FullAddress
+            </p>
+
+            <p class="mb-1">
+                <strong>Landlord:</strong>
+                @(property.Landlord?.FullName ?? "Not Assigned")
+            </p>
+
+            <p class="mb-1">
+                <strong>Total Units:</strong>
+                @property.TotalUnits
+            </p>
+
+            <p class="mb-2">
+                <strong>Description:</strong><br />
+                @(string.IsNullOrWhiteSpace(property.Description) ? "No description available." : property.Description)
+            </p>
+
+            <p class="mb-0">
+                <strong>Amenities:</strong><br />
+                @(string.IsNullOrWhiteSpace(property.Amenities) ? "No amenities listed." : property.Amenities)
+            </p>
+        </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h5>Upload Property Photo(s)</h5>
+
+            @if (!string.IsNullOrWhiteSpace(uploadMessage))
+            {
+                <div class="alert alert-info">@uploadMessage</div>
+            }
+
+            <InputFile OnChange="HandleFileSelected" accept="image/*" />
+
+            <div class="mt-3">
+                <button class="btn btn-success" @onclick="UploadPhotoAsync" disabled="@(!selectedFileReady)">
+                    Upload Photo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Photos</h5>
+                <button class="btn btn-primary" @onclick="OpenPhotoViewer" disabled="@(!property.Photos.Any())">
+                    View All Photos
+                </button>
+            </div>
+
+            @if (!property.Photos.Any())
+            {
+                <p>No photos uploaded for this property yet.</p>
+            }
+            else
+            {
+                <div class="row g-3">
+                    @foreach (var photo in property.Photos.Take(4))
+                    {
+                        <div class="col-md-3 col-sm-6">
+                            <img src="@GetPhotoUrl(photo.Id)"
+                                 alt="@photo.FileName"
+                                 class="img-fluid rounded border"
+                                 style="height:180px; width:100%; object-fit:cover; cursor:pointer;"
+                                 @onclick="() => OpenPhotoViewerAt(photo.Id)" />
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@if (showPhotoViewer && property != null && property.Photos.Any())
+{
+    <div class="photo-modal-backdrop">
+        <div class="photo-modal">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Property Photos</h5>
+                <button class="btn btn-sm btn-danger" @onclick="ClosePhotoViewer">X</button>
+            </div>
+
+            <div class="text-center mb-3">
+                <img src="@GetPhotoUrl(CurrentPhoto.Id)"
+                     alt="@CurrentPhoto.FileName"
+                     class="img-fluid rounded border"
+                     style="max-height:500px; object-fit:contain;" />
+            </div>
+
+            <div class="d-flex justify-content-center gap-2 mb-3">
+                <button class="btn btn-outline-secondary" @onclick="PreviousPhoto">&lt;</button>
+                <button class="btn btn-outline-secondary" @onclick="NextPhoto">&gt;</button>
+            </div>
+
+            <div class="text-center mb-2">
+                <strong>@CurrentPhoto.FileName</strong>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                @for (int i = 0; i < property.Photos.Count; i++)
+                {
+                    var photo = property.Photos.ElementAt(i);
+                    <img src="@GetPhotoUrl(photo.Id)"
+                         alt="@photo.FileName"
+                         class="photo-thumb @(i == currentPhotoIndex ? "selected-thumb" : "")"
+                         @onclick="() => SelectPhotoByIndex(i)" />
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+
+    private Property? property;
+    private IBrowserFile? selectedFile;
+    private bool selectedFileReady;
+    private string? uploadMessage;
+
+    private bool showPhotoViewer;
+    private int currentPhotoIndex;
+
+    private string FullAddress =>
+        property == null
+            ? string.Empty
+            : string.Join(", ",
+                new[]
+                {
+                    property.AddressLine1,
+                    property.AddressLine2,
+                    property.City,
+                    property.State,
+                    property.ZipCode
+                }.Where(x => !string.IsNullOrWhiteSpace(x)));
+
+    private PropertyPhoto CurrentPhoto => property!.Photos.ElementAt(currentPhotoIndex);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadPropertyAsync();
+    }
+
+    private async Task LoadPropertyAsync()
+    {
+        property = await Db.Properties
+            .Include(p => p.Landlord)
+            .Include(p => p.Photos.OrderBy(ph => ph.UploadedOn))
+            .FirstOrDefaultAsync(p => p.Id == Id);
+    }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        selectedFile = e.File;
+        selectedFileReady = selectedFile != null;
+        uploadMessage = selectedFile != null ? $"Selected file: {selectedFile.Name}" : null;
+        await Task.CompletedTask;
+    }
+
+    private async Task UploadPhotoAsync()
+    {
+        if (property == null || selectedFile == null)
+            return;
+
+        const long maxFileSize = 10 * 1024 * 1024;
+
+        using var stream = selectedFile.OpenReadStream(maxFileSize);
+        using var memoryStream = new MemoryStream();
+        await stream.CopyToAsync(memoryStream);
+
+        var photo = new PropertyPhoto
+        {
+            PropertyId = property.Id,
+            FileName = selectedFile.Name,
+            ContentType = selectedFile.ContentType,
+            PhotoData = memoryStream.ToArray(),
+            UploadedOn = DateTime.UtcNow
+        };
+
+        Db.PropertyPhotos.Add(photo);
+        await Db.SaveChangesAsync();
+
+        selectedFile = null;
+        selectedFileReady = false;
+        uploadMessage = "Photo uploaded successfully.";
+
+        await LoadPropertyAsync();
+        StateHasChanged();
+    }
+
+    private string GetPhotoUrl(int photoId) => $"/property-photo/{photoId}";
+
+    private void OpenPhotoViewer()
+    {
+        currentPhotoIndex = 0;
+        showPhotoViewer = true;
+    }
+
+    private void OpenPhotoViewerAt(int photoId)
+    {
+        if (property == null) return;
+
+        var index = property.Photos
+            .Select((p, i) => new { p.Id, Index = i })
+            .FirstOrDefault(x => x.Id == photoId)?.Index ?? 0;
+
+        currentPhotoIndex = index;
+        showPhotoViewer = true;
+    }
+
+    private void ClosePhotoViewer()
+    {
+        showPhotoViewer = false;
+    }
+
+    private void PreviousPhoto()
+    {
+        if (property == null || !property.Photos.Any()) return;
+
+        currentPhotoIndex--;
+        if (currentPhotoIndex < 0)
+            currentPhotoIndex = property.Photos.Count - 1;
+    }
+
+    private void NextPhoto()
+    {
+        if (property == null || !property.Photos.Any()) return;
+
+        currentPhotoIndex++;
+        if (currentPhotoIndex >= property.Photos.Count)
+            currentPhotoIndex = 0;
+    }
+
+    private void SelectPhotoByIndex(int index)
+    {
+        currentPhotoIndex = index;
+    }
+}

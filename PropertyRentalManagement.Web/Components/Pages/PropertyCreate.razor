@@ -54,6 +54,16 @@
     </div>
 
     <div class="mb-3">
+        <label class="form-label">Description</label>
+        <InputTextArea class="form-control" @bind-Value="Input.Description" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Amenities</label>
+        <InputTextArea class="form-control" @bind-Value="Input.Amenities" />
+    </div>
+
+    <div class="mb-3">
         <label class="form-label">Landlord</label>
         <InputSelect TValue="int?" class="form-select" @bind-Value="Input.LandlordId">
             <option value="">-- Select Landlord --</option>
@@ -93,7 +103,9 @@
             State = Input.State,
             ZipCode = Input.ZipCode,
             TotalUnits = Input.TotalUnits,
-            LandlordId = Input.LandlordId
+            LandlordId = Input.LandlordId,
+            Description = Input.Description,
+            Amenities = Input.Amenities
         };
 
         Db.Properties.Add(entity);

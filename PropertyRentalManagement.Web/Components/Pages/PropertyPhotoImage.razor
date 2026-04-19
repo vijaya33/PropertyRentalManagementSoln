@@ -1,0 +1,24 @@
+﻿@page "/property-photo/{id:int}"
+@using Microsoft.EntityFrameworkCore
+@inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
+@inject NavigationManager Nav
+
+@code {
+    [Parameter] public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var photo = await Db.PropertyPhotos.FirstOrDefaultAsync(p => p.Id == Id);
+
+        if (photo == null)
+        {
+            Nav.NavigateTo("/not-found", true);
+            return;
+        }
+
+        var base64 = Convert.ToBase64String(photo.PhotoData);
+        var url = $"data:{photo.ContentType};base64,{base64}";
+        Nav.NavigateTo(url, true);
+    }
+}
+
