@@ -1,0 +1,99 @@
+# **High Level Architecture Diagram**
+
+┌───────────────────────────────────────────────────────────────┐
+│                     Users / Roles                            │
+│   Admins | Property Managers | Landlords | Future Tenants    │
+└───────────────────────────────────────────────────────────────┘
+                               │
+                               ▼
+┌───────────────────────────────────────────────────────────────┐
+│                 Blazor Web Application (.NET 8)              │
+│             PropertyRentalManagement.Web                      │
+│                                                               │
+│  Components / Pages                                           │
+│  - Dashboard / Home                                           │
+│  - Properties                                                 │
+│  - Landlords                                                  │
+│  - Tenants                                                    │
+│  - Leases                                                     │
+│  - Property Details                                           │
+│  - Photo Upload / Photo Viewer                               │
+│                                                               │
+│  Layout / Navigation                                          │
+│  - MainLayout                                                 │
+│  - NavMenu                                                    │
+│                                                               │
+│  Application Startup                                          │
+│  - Program.cs                                                 │
+│  - Dependency Injection                                       │
+│  - Configuration                                              │
+└───────────────────────────────────────────────────────────────┘
+                               │
+                               ▼
+┌───────────────────────────────────────────────────────────────┐
+│                     Core Domain Layer                         │
+│             PropertyRentalManagement.Core                     │
+│                                                               │
+│  Entities                                                     │
+│  - Property                                                   │
+│  - PropertyPhoto                                              │
+│  - Landlord                                                   │
+│  - Tenant                                                     │
+│  - Lease                                                      │
+│  - Payment                                                    │
+│  - MaintenanceRequest                                         │
+│  - Unit                                                       │
+│                                                               │
+│  Business Relationships                                       │
+│  - Landlord → Properties                                      │
+│  - Property → Photos                                          │
+│  - Tenant → Leases                                            │
+│  - Property → Leases                                          │
+│  - Lease → Payments                                           │
+│  - Tenant → MaintenanceRequests                               │
+└───────────────────────────────────────────────────────────────┘
+                               │
+                               ▼
+┌───────────────────────────────────────────────────────────────┐
+│                Infrastructure / Persistence Layer             │
+│         PropertyRentalManagement.Infrastructure               │
+│                                                               │
+│  EF Core                                                      │
+│  - RentalDbContext                                            │
+│  - Fluent API / OnModelCreating                               │
+│  - Migrations                                                 │
+│                                                               │
+│  Data Access                                                  │
+│  - DbSet<Property>                                            │
+│  - DbSet<PropertyPhoto>                                       │
+│  - DbSet<Landlord>                                            │
+│  - DbSet<Tenant>                                              │
+│  - DbSet<Lease>                                               │
+│  - DbSet<Payment>                                             │
+│  - DbSet<MaintenanceRequest>                                  │
+│  - DbSet<Unit>                                                │
+└───────────────────────────────────────────────────────────────┘
+                               │
+                               ▼
+┌───────────────────────────────────────────────────────────────┐
+│                    SQL Server LocalDB                         │
+│                PropertyRentalManagementDb                     │
+│                                                               │
+│  Tables                                                       │
+│  - Properties                                                 │
+│  - PropertyPhotos                                             │
+│  - Landlords                                                  │
+│  - Tenants                                                    │
+│  - Leases                                                     │
+│  - Payments                                                   │
+│  - MaintenanceRequests                                        │
+│  - Units                                                      │
+│                                                               │
+│  Identity Tables                                              │
+│  - AspNetUsers                                                │
+│  - AspNetRoles                                                │
+│  - AspNetUserClaims                                           │
+│  - AspNetUserLogins                                           │
+│  - AspNetUserRoles                                            │
+│  - AspNetUserTokens                                           │
+└───────────────────────────────────────────────────────────────┘

@@ -1,0 +1,26 @@
+Request Flow Diagram
+
+User Action in Browser
+        │
+        ▼
+Blazor Page / Component
+(PropertyCreate, LandlordCreate, TenantCreate, Dashboard, etc.)
+        │
+        ▼
+EditForm / Validation / UI Binding
+        │
+        ▼
+Dependency Injection
+(RentalDbContext)
+        │
+        ▼
+Entity Framework Core
+(DbContext + DbSet + LINQ + Migrations)
+        │
+        ▼
+SQL Server LocalDB
+(PropertyRentalManagementDb)
+        │
+        ▼
+Results Returned to UI
+(List pages, details pages, dashboard tiles)
