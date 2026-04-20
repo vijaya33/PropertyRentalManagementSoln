@@ -96,6 +96,8 @@ PropertyRentalManagementSoln/
 │   │   │   ├── LeaseCreate.razor
 │   │   │   └── LandlordDetails.razor
 │   │   │   ├── MaintenanceRequests.razor
+|   |   |   ├── PropertyDetails.razor
+│   │   │   └── PropertyDetails.razor.css
 │   │   │   └── {{Placeholder_new_razor}}.razor
 │   │   │
 │   │   ├── App.razor
