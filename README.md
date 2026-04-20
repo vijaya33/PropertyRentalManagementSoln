@@ -127,6 +127,7 @@ PropertyRentalManagementSoln/
 │   │   ├── Unit.cs
 │   │   ├── Tenant.cs
 │   │   ├── Landlord.cs
+|   |   ├── PropertyDetails.cs
 │   │   ├── Lease.cs
 │   │   ├── Payment.cs
 │   │   └── MaintenanceRequest.cs
