@@ -16,6 +16,7 @@ This application is designed using a clean layered architecture with separate pr
 - Unit management
 - Tenant management
 - Landlord management
+- Property Detail and Property Photos
 - Lease management
 - Payment tracking
 - Maintenance request tracking
