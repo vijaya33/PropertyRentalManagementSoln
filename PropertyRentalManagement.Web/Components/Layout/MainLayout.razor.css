@@ -94,3 +94,62 @@ main {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+.mainnav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+}
+
+.nav-user {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Login Button */
+.btn-login {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid #0d6efd;
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+    .btn-login:hover {
+        background-color: #0d6efd;
+        color: #fff;
+    }
+
+/* Register Button */
+.btn-register {
+    padding: 6px 14px;
+    border-radius: 6px;
+    background-color: #0d6efd;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+    .btn-register:hover {
+        background-color: #0b5ed7;
+    }
+
+/* Logout Button */
+.btn-logout {
+    padding: 6px 14px;
+    border-radius: 6px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .btn-logout:hover {
+        background-color: #bb2d3b;
+    }
