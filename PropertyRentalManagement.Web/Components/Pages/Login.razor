@@ -5,6 +5,8 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject NavigationManager Nav
 
+@attribute [AllowAnonymous]
+
 <h3>Login</h3>
 
 @if (!string.IsNullOrWhiteSpace(errorMessage))

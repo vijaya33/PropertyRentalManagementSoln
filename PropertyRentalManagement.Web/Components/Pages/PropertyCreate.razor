@@ -6,6 +6,10 @@
 @inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
 @inject NavigationManager Nav
 
+@attribute [Authorize]
+
+
+
 <h3>Add New Property</h3>
 
 <EditForm Model="Input" OnValidSubmit="SaveAsync" FormName="CreatePropertyForm">

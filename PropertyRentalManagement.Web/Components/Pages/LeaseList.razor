@@ -3,6 +3,7 @@
 @using PropertyRentalManagement.Core.Entities
 @inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
 
+@attribute [Authorize]
 <h3>List Of Leases</h3>
 
 <a class="btn btn-primary mb-3" href="/leases/create">Add New Lease</a>
