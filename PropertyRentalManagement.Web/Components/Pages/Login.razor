@@ -7,11 +7,20 @@
 
 @attribute [AllowAnonymous]
 
+<div class="login-container">
+   
 <h3>Login</h3>
 
 @if (!string.IsNullOrWhiteSpace(errorMessage))
 {
     <div class="alert alert-danger">@errorMessage</div>
+}
+
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-warning">
+        @errorMessage
+    </div>
 }
 
 <EditForm Model="Input" OnValidSubmit="LoginUser">
@@ -36,8 +45,13 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Login</button>
-    <a href="/register" class="btn btn-secondary ms-2">Create Account</a>
+
+    <a href="/register" class="btn btn-outline-secondary ms-2">
+        Create Account
+    </a>
 </EditForm>
+</div>
+
 
 @code {
     private LoginInput Input { get; set; } = new();
@@ -53,6 +67,7 @@
             Input.RememberMe,
             lockoutOnFailure: false);
 
+      
         if (result.Succeeded)
         {
             Nav.NavigateTo("/");
@@ -63,6 +78,7 @@
         }
     }
 
+  
     public class LoginInput
     {
         [Required(ErrorMessage = "Email is required.")]
