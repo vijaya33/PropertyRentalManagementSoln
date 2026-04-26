@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using PropertyRentalManagement.Infrastructure.Data;
 using PropertyRentalManagement.Web.Components;
 using Microsoft.SqlServer.Server;
-
+using PropertyRentalManagement.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,5 +75,17 @@ app.UseAuthorization();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+app.MapGet("/property-photo/{id:int}", async (int id, RentalDbContext db) =>
+{
+    var photo = await db.PropertyPhotos.FindAsync(id);
+
+    if (photo == null || photo.PhotoData == null || photo.PhotoData.Length == 0)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.File(photo.PhotoData, photo.ContentType);
+});
 
 app.Run();
