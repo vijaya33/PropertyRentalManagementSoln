@@ -1,9 +1,18 @@
-﻿
-.login-container {
+﻿.login-container {
     max-width: 500px;
     margin: 60px auto;
-    padding: 20px;
+    padding: 24px;
     border-radius: 10px;
     background: #ffffff;
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.custom-error-box {
+    background-color: #f8d7da;
+    color: #000000;
+    border: 1px solid #f5c2c7;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-weight: 500;
 }
