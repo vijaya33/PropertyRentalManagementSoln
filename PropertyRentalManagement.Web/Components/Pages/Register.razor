@@ -6,8 +6,9 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject NavigationManager Nav
 @attribute [AllowAnonymous]
+@layout PropertyRentalManagement.Web.Components.Layout.PublicLayout
 
-<h3>Create Account</h3>
+
 <div class="auth-wrapper">
     <div class="auth-header">
         Register
@@ -22,6 +23,7 @@
         }
 
         <EditForm Model="Input" OnValidSubmit="RegisterUser" FormName="RegisterForm">
+            <AntiforgeryToken />
             <DataAnnotationsValidator />
             <ValidationSummary />
 
