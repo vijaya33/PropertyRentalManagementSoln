@@ -1,11 +1,8 @@
-using Microsoft.AspNetCore.Components.Authorization;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
 using PropertyRentalManagement.Infrastructure.Data;
 using PropertyRentalManagement.Web.Components;
-using Microsoft.SqlServer.Server;
-using PropertyRentalManagement.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +17,6 @@ builder.Services.AddAuthorization();
 builder.Services.AddDbContext<RentalDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//builder.Services.AddDbContext<RentalDbContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 8;
@@ -33,17 +27,6 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 })
 .AddEntityFrameworkStores<RentalDbContext>()
 .AddDefaultTokenProviders();
-
-//builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-//{
-//    options.Password.RequiredLength = 6;
-//    options.Password.RequireDigit = true;
-//    options.Password.RequireUppercase = false;
-//    options.Password.RequireLowercase = true;
-//    options.Password.RequireNonAlphanumeric = false;
-//})
-//.AddEntityFrameworkStores<RentalDbContext>()
-//.AddDefaultTokenProviders();
 
 
 builder.Services.AddAuthorization(options =>

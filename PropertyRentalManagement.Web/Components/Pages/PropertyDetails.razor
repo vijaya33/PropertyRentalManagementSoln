@@ -4,6 +4,9 @@
 @using PropertyRentalManagement.Core.Entities
 @inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
 @inject NavigationManager Nav
+
+
+@attribute [Authorize]
 @rendermode InteractiveServer
 
 <h3>Property Details</h3>
