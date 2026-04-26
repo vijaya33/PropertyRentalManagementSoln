@@ -1,0 +1,140 @@
+﻿@page "/dashboard"
+@attribute [Authorize]
+@using Microsoft.EntityFrameworkCore
+@inject PropertyRentalManagement.Infrastructure.Data.RentalDbContext Db
+@inject NavigationManager Nav
+
+
+<PageTitle>Dashboard</PageTitle>
+
+<h2 class="mb-3">Welcome to Property Management Portal</h2>
+
+<div class="mb-4">
+    <p>
+        This Property Rental Management portal helps property managers, landlords, and administrators
+        efficiently manage rental properties, tenants, leases, payments, and maintenance requests from a
+        single centralized platform.
+    </p>
+    <p>
+        Use this dashboard to monitor operational data, review property portfolio activity, and quickly
+        navigate to the rental, lease, payments, maintenance requests modules of the system.
+    </p>
+</div>
+
+@if (isLoading)
+{
+    <p><em>Loading dashboard...</em></p>
+}
+else
+{
+    <div class="row g-4">
+        <div class="col-md-4">
+            <a href="/properties" class="text-decoration-none">
+                <div class="card text-white bg-primary shadow-sm h-100 dashboard-tile">
+                    <div class="card-body">
+                        <h5 class="card-title">Properties</h5>
+                        <h2>@propertyCount</h2>
+                        <p class="card-text">Total properties currently managed in the system.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a href="/landlords" class="text-decoration-none">
+                <div class="card text-white bg-success shadow-sm h-100 dashboard-tile">
+                    <div class="card-body">
+                        <h5 class="card-title">Landlords</h5>
+                        <h2>@landlordCount</h2>
+                        <p class="card-text">Registered landlords associated with properties.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a href="/tenants" class="text-decoration-none">
+                <div class="card text-white bg-info shadow-sm h-100 dashboard-tile">
+                    <div class="card-body">
+                        <h5 class="card-title">Tenants</h5>
+                        <h2>@tenantCount</h2>
+                        <p class="card-text">Active tenant records available in the application.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a href="/leases" class="text-decoration-none">
+                <div class="card text-white bg-warning shadow-sm h-100 dashboard-tile">
+                    <div class="card-body">
+                        <h5 class="card-title">Leases</h5>
+                        <h2>@leaseCount</h2>
+                        <p class="card-text">Lease agreements tracked across all rental units.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a href="/maintenance-requests" class="text-decoration-none">
+                <div class="card text-white bg-danger shadow-sm h-100 dashboard-tile">
+                    <div class="card-body">
+                        <h5 class="card-title">Maintenance Requests</h5>
+                        <h2>@maintenanceRequestCount</h2>
+                        <p class="card-text">Maintenance tickets submitted for properties and units.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a href="/payments" class="text-decoration-none">
+                <div class="card text-white bg-secondary shadow-sm h-100 dashboard-tile">
+                    <div class="card-body">
+                        <h5 class="card-title">Payments</h5>
+                        <h2>@paymentCount</h2>
+                        <p class="card-text">Rent and related payments recorded in the system.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h4>Quick Overview</h4>
+        <p>
+            The dashboard provides a snapshot of the current portfolio and operational workload.
+            As you continue building the application, this area can be expanded to include:
+        </p>
+        <ul>
+            <li>recent lease activity</li>
+            <li>pending maintenance requests</li>
+            <li>monthly rent collection summaries</li>
+            <li>occupancy status by property</li>
+            <li>alerts for lease expiration and overdue payments</li>
+        </ul>
+    </div>
+}
+
+@code {
+    private int propertyCount;
+    private int landlordCount;
+    private int tenantCount;
+    private int leaseCount;
+    private int maintenanceRequestCount;
+    private int paymentCount;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        propertyCount = await Db.Properties.CountAsync();
+        landlordCount = await Db.Landlords.CountAsync();
+        tenantCount = await Db.Tenants.CountAsync();
+        leaseCount = await Db.Leases.CountAsync();
+        maintenanceRequestCount = await Db.MaintenanceRequests.CountAsync();
+        paymentCount = await Db.Payments.CountAsync();
+
+        isLoading = false;
+    }
+}

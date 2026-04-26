@@ -1,0 +1,34 @@
+﻿.public-page {
+    min-height: 100vh;
+    background-color: #f5f7fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.welcome-wrapper {
+    max-width: 900px;
+    width: 100%;
+    border: 4px solid #b8aaf0;
+    background: #ffffff;
+}
+
+.welcome-header {
+    background: #08a9df;
+    color: white;
+    padding: 18px 28px;
+    font-weight: 600;
+    border-bottom: 4px solid #4b49d8;
+    font-size: 1.25rem;
+}
+
+.welcome-body {
+    padding: 32px;
+}
+
+.welcome-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}

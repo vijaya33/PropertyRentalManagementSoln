@@ -73,7 +73,9 @@
 
         if (result.Succeeded)
         {
-            var targetUrl = string.IsNullOrWhiteSpace(ReturnUrl) ? "/" : ReturnUrl;
+            // var targetUrl = string.IsNullOrWhiteSpace(ReturnUrl) ? "/" : ReturnUrl;
+            // Nav.NavigateTo(targetUrl, forceLoad: true);
+            var targetUrl = string.IsNullOrWhiteSpace(ReturnUrl) ? "/dashboard" : ReturnUrl;
             Nav.NavigateTo(targetUrl, forceLoad: true);
         }
         else
