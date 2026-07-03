@@ -1,4 +1,4 @@
-﻿@* @* @page "/login"
+﻿@* @* @* @page "/login"
 @attribute [AllowAnonymous]
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Authorization
@@ -119,7 +119,7 @@
 //     }
 // } 
  *@
-
+ @*
 @page "/login"
 @rendermode InteractiveServer
 @using System.ComponentModel.DataAnnotations
@@ -140,13 +140,14 @@
         <div class="alert alert-danger">@errorMessage</div>
     }
 
-    @if (!string.IsNullOrWhiteSpace(errorMessage))
+  @*   @if (!string.IsNullOrWhiteSpace(errorMessage))
     {
         <div class="alert alert-warning">
             @errorMessage
         </div>
-    }
+    } *@
  
+@*
         <EditForm method="post" Model="Input" OnValidSubmit="LoginUser" FormName="LoginForm">
              
              <AntiforgeryToken />
@@ -242,3 +243,4 @@
         public bool RememberMe { get; set; }
     }
 }
+ *@
