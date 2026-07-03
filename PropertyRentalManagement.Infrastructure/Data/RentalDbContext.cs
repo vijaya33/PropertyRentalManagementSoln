@@ -227,7 +227,7 @@ namespace PropertyRentalManagement.Infrastructure.Data
 
             builder.Entity<MaintenanceRequest>(entity =>
             {
-                entity.HasKey(m => m.Id);
+                entity.HasKey(m => m.MaintenanceRequestId);
 
                 entity.Property(m => m.Title)
                     .HasMaxLength(150)
@@ -237,7 +237,7 @@ namespace PropertyRentalManagement.Infrastructure.Data
                     .HasMaxLength(1000)
                     .IsRequired();
 
-                entity.Property(m => m.RequestDate)
+                entity.Property(m => m.RequestedDate)
                     .IsRequired();
 
                 entity.Property(m => m.Status)
@@ -248,10 +248,10 @@ namespace PropertyRentalManagement.Infrastructure.Data
                     .HasMaxLength(50)
                     .IsRequired();
 
-                entity.HasOne(m => m.Unit)
-                    .WithMany()
-                    .HasForeignKey(m => m.UnitId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                //entity.HasOne(m => m.Unit)
+                //    .WithMany()
+                //    .HasForeignKey(m => m.UnitId)
+                //    .OnDelete(DeleteBehavior.Restrict);
             });
             builder.Entity<PropertyPhoto>(entity =>
             {
